@@ -18,9 +18,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/users/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    @PostMapping("/users/signup")
+    public User signup(@RequestBody User user) {
+        return userService.signup(user);
     }
 
     @PostMapping("/users/login")
