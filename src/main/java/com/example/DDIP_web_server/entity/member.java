@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class member {
 
     @Id
     private String userid;
@@ -13,9 +13,9 @@ public class User {
     private String email;
     private boolean admin;
 
-    public User() {}
+    public member() {}
 
-    public User(String userid, String userpwd, String username, String email, boolean admin) {
+    public member(String userid, String userpwd, String username, String email, boolean admin) {
         this.userid = userid;
         this.userpwd = userpwd;
         this.username = username;

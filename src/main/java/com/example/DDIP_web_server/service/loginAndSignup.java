@@ -2,23 +2,23 @@ package com.example.DDIP_web_server.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.DDIP_web_server.entity.User;
+import com.example.DDIP_web_server.entity.member;
 import com.example.DDIP_web_server.repository.UserRepository;
 
 @Service
-public class UserService {
+public class loginAndSignup {
 
     @Autowired
     private UserRepository userRepository;
 
-    public User signup(User user) {
-        return userRepository.save(user);
+    public member signup(member member) {
+        return userRepository.save(member);
     }
 
-    public User login(String userid, String userpwd) {
-        User user = userRepository.findByUserid(userid);
-        if (user != null && user.getUserpwd().equals(userpwd)) {
-            return user;  // 로그인 성공
+    public member login(String userid, String userpwd) {
+        member member = userRepository.findByUserid(userid);
+        if (member != null && member.getUserpwd().equals(userpwd)) {
+            return member;  // 로그인 성공
         }
         return null;  // 로그인 실패
     }
