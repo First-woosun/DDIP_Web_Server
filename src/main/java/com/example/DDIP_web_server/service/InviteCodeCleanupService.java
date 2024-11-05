@@ -16,7 +16,7 @@ public class InviteCodeCleanupService {
         this.inviteCodeRepository = inviteCodeRepository;
     }
 
-    @Scheduled(cron = "0 */5 * * * ?")  // 5분마다 실행
+    @Scheduled(cron = "0 */1 * * * ?")  // 1분마다 실행
     @Transactional
     public void deleteExpiredInviteCodes() {
         LocalDateTime expirationThreshold = LocalDateTime.now().minusMinutes(5);  // 5분 지난 코드 삭제
