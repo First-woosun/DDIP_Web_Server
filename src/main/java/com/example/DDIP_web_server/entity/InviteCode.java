@@ -1,3 +1,4 @@
+//수정 후 삭제 요망
 package com.example.DDIP_web_server.entity;
 
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ public class InviteCode {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
 
     // 생성자: 초대 코드 생성 시 현재 시간을 createdAt으로 설정
     public InviteCode(String code) {

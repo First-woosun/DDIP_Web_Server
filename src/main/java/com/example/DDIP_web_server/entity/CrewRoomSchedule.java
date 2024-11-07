@@ -1,49 +1,48 @@
 package com.example.DDIP_web_server.entity;
 
-
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.Temporal;
+import java.util.Date;
 
 @Entity
-//@Table(name = "CrewRoomSchedule")
+@Table(name = "CrewRoomSchedule")
 public class CrewRoomSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleId;
 
-    @Column(name = "crew_room_id", nullable = false)
-    private Integer crewRoomId;
+    @ManyToOne
+    @JoinColumn(name = "crew_room_id", nullable = false)
+    private CrewRoom crewRoom;
 
-    @Column(name = "member_id", nullable = false)
-    private Integer memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 
-    @Column(name = "start_time", nullable = false)
-    private LocalTime startTime;
+    @Temporal(TemporalType.TIME)
+    @Column(nullable = false)
+    private Date startTime;
 
-    @Column(name = "end_time", nullable = false)
-    private LocalTime endTime;
+    @Temporal(TemporalType.TIME)
+    @Column(nullable = false)
+    private Date endTime;
 
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date date;
 
-    @Column(name = "total_hours")
-    private LocalTime totalHours;
+    @Temporal(TemporalType.TIME)
+    private Date totalHours;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     public enum Status {
-        ACTIVE,
-        EXCHANGED
+        ACTIVE, EXCHANGED
     }
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "ENUM('ACTIVE', 'EXCHANGED') DEFAULT 'ACTIVE'")
-    private Status status = Status.ACTIVE;
 
-
-    // getter와 setter 메서드 추가
-
+    // Getters and Setters
     public Integer getScheduleId() {
         return scheduleId;
     }
@@ -52,51 +51,51 @@ public class CrewRoomSchedule {
         this.scheduleId = scheduleId;
     }
 
-    public Integer getCrewRoomId() {
-        return crewRoomId;
+    public CrewRoom getCrewRoom() {
+        return crewRoom;
     }
 
-    public void setCrewRoomId(Integer crewRoomId) {
-        this.crewRoomId = crewRoomId;
+    public void setCrewRoom(CrewRoom crewRoom) {
+        this.crewRoom = crewRoom;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
-    public LocalTime getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public LocalTime getTotalHours() {
+    public Date getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(LocalTime totalHours) {
+    public void setTotalHours(Date totalHours) {
         this.totalHours = totalHours;
     }
 
