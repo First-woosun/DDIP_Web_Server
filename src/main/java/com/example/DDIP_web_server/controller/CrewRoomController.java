@@ -28,7 +28,8 @@ public class CrewRoomController {
 
         // 응답을 위한 Map 객체 생성
         Map<String, String> response = new HashMap<>();
-        response.put("id", String.valueOf(newCrewRoom.getId()));  // 생성된 크루룸의 ID 추가
+        //response.put("id", String.valueOf(newCrewRoom.getId()));  // 생성된 크루룸의 ID 추가
+        response.put("id", String.valueOf(newCrewRoom.getCrewRoomId()));  // 생성된 크루룸의 ID 추가(entity 형식에 맞게 수정.)
         response.put("message", "크루룸이 성공적으로 생성되었습니다.");
 
         // 생성된 크루룸 ID와 메시지를 응답으로 반환

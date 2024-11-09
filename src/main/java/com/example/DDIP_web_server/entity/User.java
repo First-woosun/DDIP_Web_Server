@@ -1,3 +1,4 @@
+//수정 후 삭제 요망
 package com.example.DDIP_web_server.entity;
 
 import jakarta.persistence.Entity;
