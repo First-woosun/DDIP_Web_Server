@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(nullable = false, length = 50)
+    private String id;
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -31,11 +31,11 @@ public class Member {
     }
 
     // Getters and Setters
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
