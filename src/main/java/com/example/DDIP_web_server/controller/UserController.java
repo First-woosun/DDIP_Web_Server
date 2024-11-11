@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.DDIP_web_server.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -47,14 +50,14 @@ public class UserController {
     }
 
     @GetMapping("/check-admin")
-    public String isAdminAccount(@RequestParam("id") String id) {
+    public ResponseEntity<Map<String, String>> isAdminAccount(@RequestParam("id") String id) {
         String isadmin = userService.isAdminAccount(id);
+        Map<String, String> response = new HashMap<String, String>();
         if (isadmin.equals("Owner")) {
-            return "Owner";
-        }else if (isadmin.equals("Staff")) {
-            return "Staff";
-        }else{
-            return "error";
+            response.put("result", "Owner");
+        }else {
+            response.put("result", "Staff");
         }
+        return ResponseEntity.ok(response);
     }
 }
