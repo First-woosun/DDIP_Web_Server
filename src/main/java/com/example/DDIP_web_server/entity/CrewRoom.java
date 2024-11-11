@@ -27,6 +27,15 @@ public class CrewRoom {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    // crewRoomId를 인수로 받는 생성자 추가
+    public CrewRoom(Integer crewRoomId) {
+        this.crewRoomId = crewRoomId;
+    }
+
+    // 기본 생성자 필요
+    public CrewRoom() {
+    }
+
     // Getters and Setters
     public Integer getCrewRoomId() {
         return crewRoomId;

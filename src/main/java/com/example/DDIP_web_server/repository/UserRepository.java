@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<Member, String> {
     Member findByid(String id);  // 사용자 조회 메서드
 
-//    boolean existsByUserid(String userid);
+    //    boolean existsByUserid(String userid);
     boolean existsByid(String id);
 }

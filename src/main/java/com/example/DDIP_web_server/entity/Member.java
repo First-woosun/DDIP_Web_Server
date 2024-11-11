@@ -6,9 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "Member")
 public class Member {
 
+    // 수정하기
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(nullable = false, length = 100)
+    private String id;
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -22,20 +23,22 @@ public class Member {
     @Column(length = 20)
     private String contactNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserType userType;
-
-    public enum UserType {
-        OWNER, CREW
+    @Column(length =100, nullable = false)
+    private String userType;
+    // 기본 생성자 필요
+    public Member() {
     }
 
+    // id 필드를 인수로 받는 생성자 추가
+    public Member(String id) {
+        this.id = id;
+    }
     // Getters and Setters
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -71,11 +74,11 @@ public class Member {
         this.contactNumber = contactNumber;
     }
 
-    public UserType getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(UserType userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 }
