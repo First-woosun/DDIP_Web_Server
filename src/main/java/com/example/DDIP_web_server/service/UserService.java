@@ -27,7 +27,7 @@ public class UserService {
         return userRepository.existsByid(id);
     }
 
-    public boolean isAdminAccount(String id) {
+    public String isAdminAccount(String id) {
         Member user = userRepository.findByid(id);
         return user.getUserType();
     }

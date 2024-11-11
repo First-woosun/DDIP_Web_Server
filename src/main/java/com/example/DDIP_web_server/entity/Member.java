@@ -23,8 +23,8 @@ public class Member {
     @Column(length = 20)
     private String contactNumber;
 
-    @Column(nullable = false)
-    private boolean userType;
+    @Column(length =100, nullable = false)
+    private String userType;
 
     // Getters and Setters
     public String getId() {
@@ -67,11 +67,11 @@ public class Member {
         this.contactNumber = contactNumber;
     }
 
-    public boolean getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(boolean userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 }

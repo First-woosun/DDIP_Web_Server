@@ -47,12 +47,14 @@ public class UserController {
     }
 
     @GetMapping("/check-admin")
-    public boolean isAdminAccount(@RequestParam("id") String id) {
-        boolean isadmin = userService.isAdminAccount(id);
-        if (isadmin) {
-            return true;
+    public String isAdminAccount(@RequestParam("id") String id) {
+        String isadmin = userService.isAdminAccount(id);
+        if (isadmin.equals("Owner")) {
+            return "Owner";
+        }else if (isadmin.equals("Staff")) {
+            return "Staff";
         }else{
-            return false;
+            return "error";
         }
     }
 }
