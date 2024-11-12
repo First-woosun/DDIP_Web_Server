@@ -1,7 +1,11 @@
 package com.example.DDIP_web_server.entity;
 
 import jakarta.persistence.*;
+
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "CrewRoomSchedule")
@@ -19,20 +23,18 @@ public class CrewRoomSchedule {
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private Date startTime;
+    private LocalTime startTime;
 
-    @Temporal(TemporalType.TIME)
     @Column(nullable = false)
-    private Date endTime;
+    private LocalTime endTime;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date date;
 
-    @Temporal(TemporalType.TIME)
-    private Date totalHours;
+    @Column
+    private Double  totalHours;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -67,19 +69,19 @@ public class CrewRoomSchedule {
         this.member = member;
     }
 
-    public Date getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -91,14 +93,28 @@ public class CrewRoomSchedule {
         this.date = date;
     }
 
-    public Date getTotalHours() {
+    public Double  getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(Date totalHours) {
+    public void setTotalHours(Double totalHours) {
         this.totalHours = totalHours;
     }
+    // startTime과 endTime 차이 계산 메서드
+    @PrePersist
+    @PreUpdate
+    public void calculateTotalHours() {
+        if (startTime != null && endTime != null) {
+            // startTime과 endTime의 차이를 분 단위로 계산
+            long differenceInMinutes = Duration.between(startTime, endTime).toMinutes();
 
+            // 분을 시간 단위로 변환하여 totalHours에 저장
+            double hours = differenceInMinutes / 60.0;
+            this.totalHours = hours;
+        } else {
+            this.totalHours = 0.0;  // startTime 또는 endTime이 null인 경우 0으로 설정
+        }
+    }
     public Status getStatus() {
         return status;
     }

@@ -25,7 +25,14 @@ public class Member {
 
     @Column(length =100, nullable = false)
     private String userType;
+    // 기본 생성자 필요
+    public Member() {
+    }
 
+    // id 필드를 인수로 받는 생성자 추가
+    public Member(String id) {
+        this.id = id;
+    }
     // Getters and Setters
     public String getId() {
         return id;

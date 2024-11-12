@@ -28,13 +28,11 @@ public class CrewRoomMember {
     @Column(length = 20)
     private String contactNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private MemberType memberType;
+    @Column
+    private Integer pay;
 
-    public enum MemberType {
-        OWNER, CREW
-    }
+    @Column(length =100, nullable = false)
+    private String memberType;
 
     // Getters and Setters
     public Integer getCrewRoomMemberId() {
@@ -85,11 +83,13 @@ public class CrewRoomMember {
         this.contactNumber = contactNumber;
     }
 
-    public MemberType getMemberType() {
+    public Integer getPay() {return pay;}
+    public void setPay(Integer pay) {this.pay = pay;}
+
+    public String getMemberType() {
         return memberType;
     }
 
-    public void setMemberType(MemberType memberType) {
-        this.memberType = memberType;
-    }
+    public void setMemberType(String memberType) { this.memberType = memberType; }
+
 }
