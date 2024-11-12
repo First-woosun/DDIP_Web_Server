@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import com.example.DDIP_web_server.repository.CrewRoomScheduleRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-
 @Service
 public class CrewRoomScheduleService {
 

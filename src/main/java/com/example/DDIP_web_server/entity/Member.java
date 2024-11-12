@@ -81,4 +81,13 @@ public class Member {
     public void setUserType(String userType) {
         this.userType = userType;
     }
+
+    public void setAllData(String id, String name, String password, String email, String contactNumber, String userType) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.contactNumber = contactNumber;
+        this.userType = userType;
+    }
 }
