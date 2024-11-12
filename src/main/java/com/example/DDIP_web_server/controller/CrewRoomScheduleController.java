@@ -14,13 +14,13 @@ public class CrewRoomScheduleController {
     @Autowired
     private CrewRoomScheduleService crewRoomscheduleService;
 
-    @GetMapping("/wages/{memberId}")
-    public ResponseEntity<CrewRoomMember> getCrewRoomMemberByMemberId(@PathVariable int memberId) {
-        CrewRoomMember crewRoomMember = crewRoomscheduleService.getCrewRoomMemberByMemberId(memberId);
-        return ResponseEntity.ok(crewRoomMember);
+    @GetMapping("/pay/{memberId}")
+    public ResponseEntity<Integer> getPayByMemberId(@PathVariable String memberId) {
+        int pay = crewRoomscheduleService.getPayByMemberId(memberId);
+        return ResponseEntity.ok(pay);
     }
 
-    @PostMapping("/addschedules")
+    @PostMapping("/add")
     public ResponseEntity<Void> saveSchedule(@RequestBody CrewRoomSchedule schedule) {
         crewRoomscheduleService.saveSchedule(schedule);
         return ResponseEntity.ok().build();
