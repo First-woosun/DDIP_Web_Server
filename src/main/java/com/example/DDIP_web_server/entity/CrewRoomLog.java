@@ -15,13 +15,9 @@ public class CrewRoomLog {
     @JoinColumn(name = "crew_room_id")
     private CrewRoom crewRoom;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Action action;
-
-    public enum Action {
-        INSERT, UPDATE, DELETE, EXCHANGE
-    }
+    //INSERT, UPDATE, DELETE, EXCHANGE
+    @Column(length =20, nullable = false)
+    private String action;
 
     @ManyToOne
     @JoinColumn(name = "schedule_id")
@@ -75,11 +71,11 @@ public class CrewRoomLog {
         this.crewRoom = crewRoom;
     }
 
-    public Action getAction() {
+    public String getAction() {
         return action;
     }
 
-    public void setAction(Action action) {
+    public void setAction(String action) {
         this.action = action;
     }
 
