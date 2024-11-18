@@ -11,21 +11,17 @@ public class CrewRoomExchange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer exchangeId;
 
-    @ManyToOne
-    @JoinColumn(name = "crew_room_id", nullable = false)
-    private CrewRoom crewRoom;
+    @Column(nullable = false, length = 100)
+    private String crewRoom;
 
-    @ManyToOne
-    @JoinColumn(name = "request_member_id", nullable = false)
-    private Member requestMember;
+    @Column(nullable = false, length = 100)
+    private String requestMember;
 
-    @ManyToOne
-    @JoinColumn(name = "requested_schedule_id", nullable = false)
-    private CrewRoomSchedule requestedSchedule;
+    @Column(nullable = false, length = 100)
+    private String requestedSchedule;
 
-    @ManyToOne
-    @JoinColumn(name = "target_member_id")
-    private Member targetMember;
+    @Column(nullable = false, length = 100)
+    private String targetMember;
 
     @Temporal(TemporalType.DATE)
     @Column(nullable = false)
@@ -53,35 +49,35 @@ public class CrewRoomExchange {
         this.exchangeId = exchangeId;
     }
 
-    public CrewRoom getCrewRoom() {
+    public String getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(CrewRoom crewRoom) {
+    public void setCrewRoom(String crewRoom) {
         this.crewRoom = crewRoom;
     }
 
-    public Member getRequestMember() {
+    public String getRequestMember() {
         return requestMember;
     }
 
-    public void setRequestMember(Member requestMember) {
+    public void setRequestMember(String requestMember) {
         this.requestMember = requestMember;
     }
 
-    public CrewRoomSchedule getRequestedSchedule() {
+    public String getRequestedSchedule() {
         return requestedSchedule;
     }
 
-    public void setRequestedSchedule(CrewRoomSchedule requestedSchedule) {
+    public void setRequestedSchedule(String requestedSchedule) {
         this.requestedSchedule = requestedSchedule;
     }
 
-    public Member getTargetMember() {
+    public String getTargetMember() {
         return targetMember;
     }
 
-    public void setTargetMember(Member targetMember) {
+    public void setTargetMember(String targetMember) {
         this.targetMember = targetMember;
     }
 

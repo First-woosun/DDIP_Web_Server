@@ -17,9 +17,8 @@ public class CrewRoom {
     @Column(nullable = false, length = 100)
     private String shopName;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private Member owner;
+    @Column(nullable = false, length = 100)
+    private String owner;
 
     @Column(length = 50)
     private String crewRoomInvitation;
@@ -61,11 +60,11 @@ public class CrewRoom {
         this.shopName = shopName;
     }
 
-    public Member getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(Member owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 

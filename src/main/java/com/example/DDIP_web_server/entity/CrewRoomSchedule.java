@@ -15,13 +15,11 @@ public class CrewRoomSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleId;
 
-    @ManyToOne
-    @JoinColumn(name = "crew_room_id", nullable = false)
-    private CrewRoom crewRoom;
+    @Column(nullable = false, length = 100)
+    private String crewRoom;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    @Column(nullable = false, length = 100)
+    private String member;
 
     @Column(nullable = false)
     private LocalTime startTime;
@@ -52,19 +50,19 @@ public class CrewRoomSchedule {
         this.scheduleId = scheduleId;
     }
 
-    public CrewRoom getCrewRoom() {
+    public String getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(CrewRoom crewRoom) {
+    public void setCrewRoom(String crewRoom) {
         this.crewRoom = crewRoom;
     }
 
-    public Member getMember() {
+    public String getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(String member) {
         this.member = member;
     }
 
