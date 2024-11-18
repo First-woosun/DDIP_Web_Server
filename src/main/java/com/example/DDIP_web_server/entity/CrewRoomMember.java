@@ -28,9 +28,7 @@ public class CrewRoomMember {
     @Column(length = 20)
     private String contactNumber;
 
-    @Column
-    private Integer pay;
-
+    //owner crew
     @Column(length =100, nullable = false)
     private String memberType;
 
@@ -59,13 +57,9 @@ public class CrewRoomMember {
         this.member = member;
     }
 
-    public String getColor() {
-        return color;
-    }
+    public String getColor() {return color;}
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+    public void setColor(String color) {this.color = color;}
 
     public Date getStartDate() {
         return startDate;
@@ -83,8 +77,6 @@ public class CrewRoomMember {
         this.contactNumber = contactNumber;
     }
 
-    public Integer getPay() {return pay;}
-    public void setPay(Integer pay) {this.pay = pay;}
 
     public String getMemberType() {
         return memberType;

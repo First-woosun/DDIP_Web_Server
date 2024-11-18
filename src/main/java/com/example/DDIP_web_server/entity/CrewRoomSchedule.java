@@ -36,13 +36,12 @@ public class CrewRoomSchedule {
     @Column
     private Double  totalHours;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status;
+    @Column
+    private Integer pay;
 
-    public enum Status {
-        ACTIVE, EXCHANGED
-    }
+    //ACTIVE, EXCHANGED
+    @Column(length =20, nullable = false)
+    private String status;
 
     // Getters and Setters
     public Integer getScheduleId() {
@@ -115,11 +114,15 @@ public class CrewRoomSchedule {
             this.totalHours = 0.0;  // startTime 또는 endTime이 null인 경우 0으로 설정
         }
     }
-    public Status getStatus() {
+
+    public Integer getPay() {return pay;}
+    public void setPay(Integer pay) {this.pay = pay;}
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

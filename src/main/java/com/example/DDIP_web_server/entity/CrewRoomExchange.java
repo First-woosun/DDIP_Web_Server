@@ -39,13 +39,10 @@ public class CrewRoomExchange {
     @Column(nullable = false)
     private Date exchangeEndTime;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ExchangeStatus exchangeStatus;
+    //REQUESTED, COMPLETED, CANCELLED
+    @Column(length =20, nullable = false)
+    private String exchangeStatus;
 
-    public enum ExchangeStatus {
-        REQUESTED, COMPLETED, CANCELLED
-    }
 
     // Getters and Setters
     public Integer getExchangeId() {
@@ -112,11 +109,11 @@ public class CrewRoomExchange {
         this.exchangeEndTime = exchangeEndTime;
     }
 
-    public ExchangeStatus getExchangeStatus() {
+    public String getExchangeStatus() {
         return exchangeStatus;
     }
 
-    public void setExchangeStatus(ExchangeStatus exchangeStatus) {
+    public void setExchangeStatus(String exchangeStatus) {
         this.exchangeStatus = exchangeStatus;
     }
 }

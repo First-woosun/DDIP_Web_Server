@@ -23,6 +23,7 @@ public class Member {
     @Column(length = 20)
     private String contactNumber;
 
+    // Owner, Staff
     @Column(length =100, nullable = false)
     private String userType;
     // 기본 생성자 필요
