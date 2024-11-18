@@ -14,11 +14,13 @@ public class CrewRoomScheduleController {
     @Autowired
     private CrewRoomScheduleService crewRoomscheduleService;
 
-    @GetMapping("/pay/{memberId}")
+
+/*    @GetMapping("/pay/{memberId}")
     public ResponseEntity<Integer> getPayByMemberId(@PathVariable String memberId) {
         int pay = crewRoomscheduleService.getPayByMemberId(memberId);
         return ResponseEntity.ok(pay);
-    }
+    }*/
+
 
     @PostMapping("/add")
     public ResponseEntity<Void> saveSchedule(@RequestBody CrewRoomSchedule schedule) {

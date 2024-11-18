@@ -21,14 +21,15 @@ public class CrewRoomScheduleService {
     @Autowired
     private CrewRoomMemberRepository crewRoomMemberRepository;
 
-    public int getPayByMemberId(String memberId) {
+/*    
+public int getPayByMemberId(String memberId) {
         CrewRoomMember crewRoomMember = crewRoomMemberRepository.findByMemberId(memberId);
         if (crewRoomMember != null) {
             return crewRoomMember.getPay();
         } else {
             throw new RuntimeException("Pay information not found for memberId: " + memberId);
         }
-    }
+    }*/
 
     @Transactional
     public void saveSchedule(CrewRoomSchedule schedule) {
