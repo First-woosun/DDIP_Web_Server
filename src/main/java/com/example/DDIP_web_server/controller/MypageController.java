@@ -26,7 +26,7 @@ public class MypageController {
         response.put("id", member.getId());
         response.put("email", member.getEmail());
         response.put("password", member.getPassword());
-        response.put("contactNumber", member.getContactNumber());
+        response.put("contactNumber", member.getContact_number());
         response.put("userType", member.getUserType());
 
         return ResponseEntity.ok(response);

@@ -1,6 +1,7 @@
 package com.example.DDIP_web_server.service;
 
 import com.example.DDIP_web_server.entity.Member;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.DDIP_web_server.repository.MemberRepository;
@@ -10,6 +11,10 @@ public class MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    public Member findById(String id) {
+        return memberRepository.findById(id).orElse(null);
+    }
 
     public Member signup(Member user) {
         return memberRepository.save(user);
@@ -30,6 +35,19 @@ public class MemberService {
     public String isAdminAccount(String id) {
         Member user = memberRepository.findByid(id);
         return user.getUserType();
+    }
+
+    public boolean updateMember(String id, Member updatedMember) {
+        if (memberRepository.existsById(id)) {
+            Member existingMember = memberRepository.findById(id).get();
+            existingMember.setName(updatedMember.getName());
+            existingMember.setEmail(updatedMember.getEmail());
+            existingMember.setContact_number(updatedMember.getContact_number());
+            existingMember.setPassword(updatedMember.getPassword());
+            memberRepository.save(existingMember);
+            return true;
+        }
+        return false;
     }
 
 //    public boolean checkUseridExists(String userid) {

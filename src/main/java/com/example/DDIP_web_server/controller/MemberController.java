@@ -2,6 +2,7 @@ package com.example.DDIP_web_server.controller;
 
 import com.example.DDIP_web_server.entity.Member;
 import com.example.DDIP_web_server.repository.MemberRepository;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,21 @@ public class MemberController {
         }else {
             response.put("result", "Staff");
         }
+        return ResponseEntity.ok(response);
+    }
+
+    // 회원 정보 수정
+    @PutMapping("/changeData/{id}")
+    public ResponseEntity<Map<String, String>> updateMember(
+            @PathVariable String id,
+            @RequestBody Member updatedMember) {
+        boolean success = memberService.updateMember(id, updatedMember);
+        Map<String, String> response = new HashMap<>();
+        if (success) {
+            response.put("message", "회원 정보 수정 성공");
+            return ResponseEntity.ok(response);
+        }
+        response.put("message", "회원 정보 수정 실패");
         return ResponseEntity.ok(response);
     }
 }
