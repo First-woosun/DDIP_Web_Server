@@ -11,29 +11,24 @@ public class CrewRoomLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer logId;
 
-    @ManyToOne
-    @JoinColumn(name = "crew_room_id")
-    private CrewRoom crewRoom;
+    @Column(nullable = false, length = 100)
+    private String crewRoom;
 
     //INSERT, UPDATE, DELETE, EXCHANGE
     @Column(length =20, nullable = false)
     private String action;
 
-    @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    private CrewRoomSchedule schedule;
+    @Column(nullable = false, length = 100)
+    private String schedule;
 
-    @ManyToOne
-    @JoinColumn(name = "exchange_id")
-    private CrewRoomExchange exchange;
+    @Column(nullable = false, length = 100)
+    private String exchange;
 
-    @ManyToOne
-    @JoinColumn(name = "previous_member_id")
-    private Member previousMember;
+    @Column(nullable = false, length = 100)
+    private String previousMember;
 
-    @ManyToOne
-    @JoinColumn(name = "new_member_id")
-    private Member newMember;
+    @Column(nullable = false, length = 100)
+    private String newMember;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -63,11 +58,11 @@ public class CrewRoomLog {
         this.logId = logId;
     }
 
-    public CrewRoom getCrewRoom() {
+    public String getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(CrewRoom crewRoom) {
+    public void setCrewRoom(String crewRoom) {
         this.crewRoom = crewRoom;
     }
 
@@ -79,35 +74,35 @@ public class CrewRoomLog {
         this.action = action;
     }
 
-    public CrewRoomSchedule getSchedule() {
+    public String getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(CrewRoomSchedule schedule) {
+    public void setSchedule(String schedule) {
         this.schedule = schedule;
     }
 
-    public CrewRoomExchange getExchange() {
+    public String getExchange() {
         return exchange;
     }
 
-    public void setExchange(CrewRoomExchange exchange) {
+    public void setExchange(String exchange) {
         this.exchange = exchange;
     }
 
-    public Member getPreviousMember() {
+    public String getPreviousMember() {
         return previousMember;
     }
 
-    public void setPreviousMember(Member previousMember) {
+    public void setPreviousMember(String previousMember) {
         this.previousMember = previousMember;
     }
 
-    public Member getNewMember() {
+    public String getNewMember() {
         return newMember;
     }
 
-    public void setNewMember(Member newMember) {
+    public void setNewMember(String newMember) {
         this.newMember = newMember;
     }
 

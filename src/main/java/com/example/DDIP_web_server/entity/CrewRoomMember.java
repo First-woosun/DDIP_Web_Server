@@ -11,13 +11,11 @@ public class CrewRoomMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer crewRoomMemberId;
 
-    @ManyToOne
-    @JoinColumn(name = "crew_room_id", nullable = false)
-    private CrewRoom crewRoom;
+    @Column(nullable = false, length = 100)
+    private String crewRoom;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private Member member;
+    @Column(nullable = false, length = 100)
+    private String member;
 
     @Column(length = 20)
     private String color;
@@ -41,19 +39,19 @@ public class CrewRoomMember {
         this.crewRoomMemberId = crewRoomMemberId;
     }
 
-    public CrewRoom getCrewRoom() {
+    public String getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(CrewRoom crewRoom) {
+    public void setCrewRoom(String crewRoom) {
         this.crewRoom = crewRoom;
     }
 
-    public Member getMember() {
+    public String getMember() {
         return member;
     }
 
-    public void setMember(Member member) {
+    public void setMember(String member) {
         this.member = member;
     }
 
