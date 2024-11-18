@@ -11,8 +11,8 @@ public class CrewRoomLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer logId;
 
-    @Column(nullable = false, length = 100)
-    private String crewRoom;
+    @Column(nullable = false)
+    private Integer crewRoom;
 
     //INSERT, UPDATE, DELETE, EXCHANGE
     @Column(length =20, nullable = false)
@@ -58,11 +58,11 @@ public class CrewRoomLog {
         this.logId = logId;
     }
 
-    public String getCrewRoom() {
+    public Integer getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(String crewRoom) {
+    public void setCrewRoom(Integer crewRoom) {
         this.crewRoom = crewRoom;
     }
 

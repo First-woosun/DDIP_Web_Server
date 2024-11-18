@@ -11,8 +11,8 @@ public class CrewRoomExchange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer exchangeId;
 
-    @Column(nullable = false, length = 100)
-    private String crewRoom;
+    @Column(nullable = false)
+    private Integer crewRoom;
 
     @Column(nullable = false, length = 100)
     private String requestMember;
@@ -49,11 +49,11 @@ public class CrewRoomExchange {
         this.exchangeId = exchangeId;
     }
 
-    public String getCrewRoom() {
+    public Integer getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(String crewRoom) {
+    public void setCrewRoom(Integer crewRoom) {
         this.crewRoom = crewRoom;
     }
 

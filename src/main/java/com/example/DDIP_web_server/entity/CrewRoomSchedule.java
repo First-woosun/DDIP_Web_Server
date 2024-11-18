@@ -15,8 +15,8 @@ public class CrewRoomSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer scheduleId;
 
-    @Column(nullable = false, length = 100)
-    private String crewRoom;
+    @Column(nullable = false)
+    private Integer crewRoom;
 
     @Column(nullable = false, length = 100)
     private String member;
@@ -50,11 +50,11 @@ public class CrewRoomSchedule {
         this.scheduleId = scheduleId;
     }
 
-    public String getCrewRoom() {
+    public Integer getCrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(String crewRoom) {
+    public void setCrewRoom(Integer crewRoom) {
         this.crewRoom = crewRoom;
     }
 

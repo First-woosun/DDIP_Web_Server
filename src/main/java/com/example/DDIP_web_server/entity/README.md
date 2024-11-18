@@ -47,7 +47,6 @@ CREATE TABLE CrewRoomMember (
     color VARCHAR(20),                                    -- 알바생 고유 색상
     start_date DATE,                                      -- 알바 시작일
     contact_number VARCHAR(20),                           -- 연락처 
-    pay INT,											  -- 급여
     member_type VARCHAR(50) NOT NULL ,           -- 회원 유형
     FOREIGN KEY (crew_room_id) REFERENCES CrewRoom(crew_room_id),
     FOREIGN KEY (member_id) REFERENCES Member(id)         -- Member 테이블과 연관 관계
@@ -64,6 +63,7 @@ CREATE TABLE CrewRoomSchedule (
     end_time TIME NOT NULL,                      -- 근무 종료 시간
     date DATE NOT NULL,                          -- 근무 날짜
     total_hours TIME,                            -- 총 근무 시간
+    pay INT NOT NULL,                            -- 시급
     status VARCHAR(50) NOT NULL,  -- 일정 상태
     FOREIGN KEY (crew_room_id) REFERENCES CrewRoom(crew_room_id),
     FOREIGN KEY (member_id) REFERENCES Member(id)
