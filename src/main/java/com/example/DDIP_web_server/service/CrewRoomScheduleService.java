@@ -2,6 +2,7 @@ package com.example.DDIP_web_server.service;
 import com.example.DDIP_web_server.entity.CrewRoomMember;
 import com.example.DDIP_web_server.entity.CrewRoomSchedule;
 import com.example.DDIP_web_server.repository.CrewRoomMemberRepository;
+import com.example.DDIP_web_server.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.DDIP_web_server.repository.CrewRoomScheduleRepository;
@@ -15,18 +16,19 @@ public class CrewRoomScheduleService {
 
     @Autowired
     private CrewRoomScheduleRepository crewScheduleRepository;
-
+    @Autowired
+    private MemberRepository memberRepository;
     @Autowired
     private CrewRoomMemberRepository crewRoomMemberRepository;
 
-    public CrewRoomMember getCrewRoomMemberByMemberId(int memberId) {
-        CrewRoomMember crewRoomMember = crewRoomMemberRepository.findByMemberId(String.valueOf(memberId));
+/*    public int getPayByMemberId(String memberId) {
+        CrewRoomMember crewRoomMember = crewRoomMemberRepository.findByMemberId(memberId);
         if (crewRoomMember != null) {
-            return crewRoomMember;
+            return crewRoomMember.getPay();
         } else {
-            throw new RuntimeException("CrewRoomMember not found for memberId: " + memberId);
+            throw new RuntimeException("Pay information not found for memberId: " + memberId);
         }
-    }
+    }*/
 
     @Transactional
     public void saveSchedule(CrewRoomSchedule schedule) {
