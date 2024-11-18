@@ -21,7 +21,7 @@ public class Member {
     private String email;
 
     @Column(length = 20)
-    private String contactNumber;
+    private String contact_number;
 
     // Owner, Staff
     @Column(length =100, nullable = false)
@@ -67,12 +67,12 @@ public class Member {
         this.email = email;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getContact_number() {
+        return contact_number;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number;
     }
 
     public String getUserType() {
@@ -80,6 +80,15 @@ public class Member {
     }
 
     public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public void setAllData(String id, String name, String password, String email, String contactNumber, String userType) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.contact_number = contactNumber;
         this.userType = userType;
     }
 }
