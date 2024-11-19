@@ -70,25 +70,6 @@ CREATE TABLE CrewRoomSchedule (
 );
 ```
 
-### CrewRoomExchange
-```
-CREATE TABLE CrewRoomExchange (
-    exchange_id INT AUTO_INCREMENT PRIMARY KEY,      -- 교환 ID
-    crew_room_id INT NOT NULL,                       -- 크루룸 ID
-    request_member_id INT NOT NULL,                  -- 신청한 알바생 ID (Member 테이블과 연관)
-    requested_schedule_id INT NOT NULL,              -- 신청한 일정 ID (CrewRoomSchedule)
-    target_member_id INT,                            -- 교환할 상대 알바생 ID (Member 테이블과 연관)
-    exchange_date DATE NOT NULL,                     -- 교환 날짜
-    exchange_start_time TIME NOT NULL,               -- 교환 시작 시간
-    exchange_end_time TIME NOT NULL,                 -- 교환 종료 시간
-    exchange_status VARCHAR(20) NOT NULL,  -- 교환 상태
-    FOREIGN KEY (crew_room_id) REFERENCES CrewRoom(crew_room_id),
-    FOREIGN KEY (request_member_id) REFERENCES Member(id),
-    FOREIGN KEY (requested_schedule_id) REFERENCES CrewRoomSchedule(schedule_id),
-    FOREIGN KEY (target_member_id) REFERENCES Member(id)
-);
-```
-
 ### CrewRoomLog
 ```
 CREATE TABLE CrewRoomLog (

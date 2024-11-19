@@ -2,6 +2,8 @@ package com.example.DDIP_web_server.entity;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 
 @Entity
 @Table(name = "CrewRoom")
@@ -22,9 +24,6 @@ public class CrewRoom {
 
     @Column(length = 50)
     private String crewRoomInvitation;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
 
     // crewRoomId를 인수로 받는 생성자 추가
     public CrewRoom(Integer crewRoomId) {
@@ -76,11 +75,18 @@ public class CrewRoom {
         this.crewRoomInvitation = crewRoomInvitation;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    @PrePersist
+    private void generateInviteCode() {
+        if (this.crewRoomInvitation == null || this.crewRoomInvitation.isEmpty()) {
+                String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                StringBuilder inviteCode = new StringBuilder();
+                Random random = new Random();
+                for (int i = 0; i < 6; i++) {
+                    int index = random.nextInt(chars.length());
+                    inviteCode.append(chars.charAt(index));
+                }
+            this.crewRoomInvitation = inviteCode.toString();
+        }
     }
 }

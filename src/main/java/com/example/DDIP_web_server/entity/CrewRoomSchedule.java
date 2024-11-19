@@ -37,7 +37,7 @@ public class CrewRoomSchedule {
     @Column
     private Integer pay;
 
-    //ACTIVE, EXCHANGED
+    //ACTIVE, EXCHANGED, COMPLETE
     @Column(length =20, nullable = false)
     private String status;
 
@@ -97,6 +97,7 @@ public class CrewRoomSchedule {
     public void setTotalHours(Double totalHours) {
         this.totalHours = totalHours;
     }
+
     // startTime과 endTime 차이 계산 메서드
     @PrePersist
     @PreUpdate
