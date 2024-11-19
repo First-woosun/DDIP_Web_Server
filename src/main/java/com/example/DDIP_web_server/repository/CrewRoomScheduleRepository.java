@@ -18,6 +18,18 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
             nativeQuery = true)
     List<CrewRoomSchedule> findCurrentWeekSchedulesByMemberId(@Param("memberId") String memberId);
 
+    // 특정 월의 주별 근무 시간 및 급여 계산
+    @Query(value = "SELECT YEARWEEK(c.date, 1) AS week, " +
+            "SUM(c.totalHours) AS weeklyHours, " +
+            "SUM(c.totalHours * c.pay) AS weeklyPay " +
+            "FROM CrewRoomSchedule c " +
+            "WHERE MONTH(c.date) = :month " +
+            "GROUP BY YEARWEEK(c.date, 1)",
+            nativeQuery = true)
+    List<Object[]> findWeeklyHoursAndPayByMonth(@Param("month") int month);
+
+
+/*
     // 특정 월의 주간 근무 시간 계산
     @Query(value = "SELECT YEARWEEK(c.date, 1) AS week, " +
             "SUM(TIMESTAMPDIFF(MINUTE, c.start_time, c.end_time) / 60.0) AS weeklyHours " +
@@ -26,4 +38,17 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
             "GROUP BY YEARWEEK(c.date, 1)",
             nativeQuery = true)
     List<Object[]> findWeeklyHoursByMonth(@Param("month") int month);
+
+    // 특정 월의 주별 급여 합계 계산
+    @Query(value = "SELECT YEARWEEK(c.date, 1) AS week, " +
+            "SUM((TIMESTAMPDIFF(MINUTE, c.start_time, c.end_time) / 60.0) * c.pay) AS weeklyPay " +
+            "FROM CrewRoomSchedule c " +
+            "WHERE MONTH(c.date) = :month " +
+            "GROUP BY YEARWEEK(c.date, 1)",
+            nativeQuery = true)
+    List<Object[]> findWeeklyPayByMonth(@Param("month") int month);
+
+*/
+
+
 }

@@ -38,7 +38,7 @@ public class CrewRoomPayService {
      */
     public Map<Integer, Double> getWeeklyHoursByMonth(int month) {
         // 데이터베이스에서 주어진 월의 주차별 근무 시간을 조회
-        List<Object[]> results = scheduleRepository.findWeeklyHoursByMonth(month);
+        List<Object[]> results = scheduleRepository.findWeeklyHoursAndPayByMonth(month);
         Map<Integer, Double> weeklyHours = new HashMap<>();
 
         // 1. 데이터 로드 및 주차별 시간 계산
