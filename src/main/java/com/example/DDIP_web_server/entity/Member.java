@@ -25,7 +25,7 @@ public class Member {
 
     // Owner, Staff
     @Column(length =100, nullable = false)
-    private String userType;
+    private String user_type;
     // 기본 생성자 필요
     public Member() {
     }
@@ -75,20 +75,20 @@ public class Member {
         this.contact_number = contact_number;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getUser_type() {
+        return user_type;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
     }
 
-    public void setAllData(String id, String name, String password, String email, String contactNumber, String userType) {
+    public void member(String id, String name, String password, String email, String contact_number, String user_type) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.contact_number = contactNumber;
-        this.userType = userType;
+        this.contact_number = contact_number;
+        this.user_type = user_type;
     }
 }

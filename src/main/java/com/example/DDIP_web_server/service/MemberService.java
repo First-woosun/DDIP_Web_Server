@@ -1,7 +1,6 @@
 package com.example.DDIP_web_server.service;
 
 import com.example.DDIP_web_server.entity.Member;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.DDIP_web_server.repository.MemberRepository;
@@ -34,7 +33,7 @@ public class MemberService {
 
     public String isAdminAccount(String id) {
         Member user = memberRepository.findByid(id);
-        return user.getUserType();
+        return user.getUser_type();
     }
 
     public boolean updateMember(String id, Member updatedMember) {
