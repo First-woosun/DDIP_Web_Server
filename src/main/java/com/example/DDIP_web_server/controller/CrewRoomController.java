@@ -54,4 +54,11 @@ public class CrewRoomController {
         }
     }
 
+    // 멤버ID로 소속된 크루룸 조회
+    @GetMapping("/list/{memberId}")
+    public ResponseEntity<List<Map<String, String>>> getCrewRoomsByMemberId(@PathVariable String memberId) {
+        List<Map<String, String>> crewRooms = crewRoomService.getCrewRoomsByMemberId(memberId);
+        return ResponseEntity.ok(crewRooms);
+    }
+
 }
