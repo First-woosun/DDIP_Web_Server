@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/Member")
 public class MemberController {
 
     @Autowired
@@ -22,12 +22,12 @@ public class MemberController {
     @Autowired
     private MemberRepository memberRepository;
 
-    @PostMapping("/Member/signup")
+    @PostMapping("/signup")
     public Member signup(@RequestBody Member user) {
         return memberService.signup(user);
     }
 
-    @PostMapping("/Member/login")
+    @PostMapping("/login")
     public Member login(@RequestParam String id, @RequestParam String password) {
         Member user = memberService.login(id, password);
         if (user != null) {
