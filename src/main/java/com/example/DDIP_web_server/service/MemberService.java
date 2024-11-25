@@ -49,7 +49,12 @@ public class MemberService {
         return false;
     }
 
-//    public boolean checkUseridExists(String userid) {
-//        return userRepository.existsByUserid(userid);
-//    }
+    // 회원 탈퇴 함수
+    public boolean deleteMember(String id) {
+        if (memberRepository.existsById(id)) {
+            memberRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

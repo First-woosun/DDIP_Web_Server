@@ -76,4 +76,16 @@ public class MemberController {
         response.put("message", "회원 정보 수정 실패");
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/withdraw/{id}")
+    public ResponseEntity<Map<String, String>> withdrawMember(@PathVariable String id) {
+        Map<String, String> response = new HashMap<>();
+        boolean isDeleted = memberService.deleteMember(id);
+        if (isDeleted) {
+            response.put("message", "탈퇴가 완료되었습니다.");
+            return ResponseEntity.ok(response);
+        }
+        response.put("message", "회원 정보가 존재하지 않습니다.");
+        return ResponseEntity.ok(response);
+    }
 }
