@@ -13,7 +13,7 @@ public class CrewRoomMemberService {
         this.repository = repository;
     }
 
-    public List<CrewRoomMember> getMembersBycrewRoom(int crewRoom) {
+    public List<CrewRoomMember> getMembersBycrewRoom(Integer crewRoom) {
         return repository.findByCrewRoom(crewRoom);
     }
 }
