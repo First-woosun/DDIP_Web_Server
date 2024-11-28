@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface CrewRoomMemberRepository extends JpaRepository<CrewRoomMember, Integer> {
     // 특정 crewRoomId에 따라 데이터를 가져오는 메서드 정의
-    List<CrewRoomMember> findByCrewRoom(int crewRoom);
+    List<CrewRoomMember> findByCrewRoom(Integer crewRoom);
 }

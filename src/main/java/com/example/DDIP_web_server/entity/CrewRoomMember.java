@@ -31,19 +31,19 @@ public class CrewRoomMember {
     private String memberType;
 
     // Getters and Setters
-    public Integer getCrewRoomMemberId() {
+    public Integer getcrewRoomMemberId() {
         return crewRoomMemberId;
     }
 
-    public void setCrewRoomMemberId(Integer crewRoomMemberId) {
+    public void setcrewRoomMemberId(Integer crewRoomMemberId) {
         this.crewRoomMemberId = crewRoomMemberId;
     }
 
-    public Integer getCrewRoom() {
+    public Integer getcrewRoom() {
         return crewRoom;
     }
 
-    public void setCrewRoom(Integer crewRoom) {
+    public void setcrewRoom(Integer crewRoom) {
         this.crewRoom = crewRoom;
     }
 
@@ -55,19 +55,19 @@ public class CrewRoomMember {
         this.member = member;
     }
 
-    public String getColor() {return color;}
+    public String getcolor() {return color;}
 
-    public void setColor(String color) {this.color = color;}
+    public void setcolor(String color) {this.color = color;}
 
-    public Date getStartDate() {
+    public Date getstartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setstartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getContactNumber() {
+    public String getcontactNumber() {
         return contactNumber;
     }
 
@@ -76,10 +76,18 @@ public class CrewRoomMember {
     }
 
 
-    public String getMemberType() {
+    public String getmemberType() {
         return memberType;
     }
 
     public void setMemberType(String memberType) { this.memberType = memberType; }
+
+    public void getall(){
+        System.out.println(getMember());
+        System.out.println(getmemberType());
+        System.out.println(getcontactNumber());
+        System.out.println(getstartDate());
+        System.out.println(getcolor());
+    }
 
 }
