@@ -5,26 +5,71 @@ import com.example.DDIP_web_server.entity.CrewRoomMember;
 import com.example.DDIP_web_server.entity.CrewRoomSchedule;
 import com.example.DDIP_web_server.service.CrewRoomScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/schedules")
 public class CrewRoomScheduleController {
     @Autowired
-    private CrewRoomScheduleService crewRoomscheduleService;
+    private CrewRoomScheduleService crewRoomScheduleService;
 
-
-/*    @GetMapping("/pay/{memberId}")
-    public ResponseEntity<Integer> getPayByMemberId(@PathVariable String memberId) {
-        int pay = crewRoomscheduleService.getPayByMemberId(memberId);
-        return ResponseEntity.ok(pay);
-    }*/
-
-
+    //스케줄 저장
     @PostMapping("/add")
     public ResponseEntity<Void> saveSchedule(@RequestBody CrewRoomSchedule schedule) {
-        crewRoomscheduleService.saveSchedule(schedule);
+        crewRoomScheduleService.saveSchedule(schedule);
         return ResponseEntity.ok().build();
     }
+    //스케줄 조회
+    @GetMapping("/{crewRoomId}/{memberId}")
+    public ResponseEntity<List<Map<String, Object>>> getSchedules(
+            @PathVariable String crewRoomId, // String으로 받기
+            @PathVariable String memberId) {
+        try {
+            // roomId를 String에서 int로 변환
+            int crewRoomIdInt = Integer.parseInt(crewRoomId);
+
+            // 서비스 호출
+            List<Map<String, Object>> schedules = crewRoomScheduleService.getActiveSchedulesForCurrentMonth(crewRoomIdInt, memberId);
+            return ResponseEntity.ok(schedules);
+        } catch (NumberFormatException e) {
+            // roomId가 잘못된 형식일 경우 400 응답 반환
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    // 스케줄 상태 업데이트 API
+    @PatchMapping("/exchange/{scheduleId}")
+    public ResponseEntity<String> updateScheduleStatus(@PathVariable Integer scheduleId) {
+        boolean isUpdated = crewRoomScheduleService.updateScheduleStatusToExchanged(scheduleId);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Schedule status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update schedule status.");
+        }
+    }
+    @GetMapping("/exchangeable/{crewRoomId}")
+    public ResponseEntity<List<Map<String, Object>>> getExchangeableSchedules(@PathVariable Integer crewRoomId) {
+        List<Map<String, Object>> exchangeableSchedules = crewRoomScheduleService.getExchangeableSchedules(crewRoomId);
+        return ResponseEntity.ok(exchangeableSchedules);
+    }
+
+    @PatchMapping("/DDIP")
+    public ResponseEntity<String> exchangeSchedule(@RequestBody Map<String, String> requestData) {
+        String memberId = requestData.get("memberId");
+        Integer scheduleId = Integer.parseInt(requestData.get("scheduleId"));
+
+        boolean isUpdated = crewRoomScheduleService.exchangeSchedule(scheduleId, memberId);
+
+        if (isUpdated) {
+            return ResponseEntity.ok("Schedule updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update schedule.");
+        }
+    }
 }
+
