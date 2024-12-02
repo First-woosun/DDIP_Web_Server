@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedule, Integer> {
@@ -28,27 +30,18 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
             nativeQuery = true)
     List<Object[]> findWeeklyHoursAndPayByMonth(@Param("month") int month);
 
+    @Query("SELECT crs FROM CrewRoomSchedule crs " +
+            "WHERE crs.crewRoom = :crewRoomId " +
+            "AND crs.status = 'EXCHANGED'")
+    List<CrewRoomSchedule> findExchangeableSchedulesByCrewRoomId(@Param("crewRoomId") Integer crewRoomId);
 
-/*
-    // 특정 월의 주간 근무 시간 계산
-    @Query(value = "SELECT YEARWEEK(c.date, 1) AS week, " +
-            "SUM(TIMESTAMPDIFF(MINUTE, c.start_time, c.end_time) / 60.0) AS weeklyHours " +
-            "FROM CrewRoomSchedule c " +
-            "WHERE MONTH(c.date) = :month " +
-            "GROUP BY YEARWEEK(c.date, 1)",
-            nativeQuery = true)
-    List<Object[]> findWeeklyHoursByMonth(@Param("month") int month);
-
-    // 특정 월의 주별 급여 합계 계산
-    @Query(value = "SELECT YEARWEEK(c.date, 1) AS week, " +
-            "SUM((TIMESTAMPDIFF(MINUTE, c.start_time, c.end_time) / 60.0) * c.pay) AS weeklyPay " +
-            "FROM CrewRoomSchedule c " +
-            "WHERE MONTH(c.date) = :month " +
-            "GROUP BY YEARWEEK(c.date, 1)",
-            nativeQuery = true)
-    List<Object[]> findWeeklyPayByMonth(@Param("month") int month);
-
-*/
-
+    @Query("SELECT crs FROM CrewRoomSchedule crs " +
+            "WHERE crs.crewRoom = :crewRoomId " +
+            "AND crs.member = :memberId " +
+            "AND crs.status = 'ACTIVE' " +
+            "AND FUNCTION('MONTH', crs.date) = FUNCTION('MONTH', CURRENT_DATE) " +
+            "AND FUNCTION('YEAR', crs.date) = FUNCTION('YEAR', CURRENT_DATE)")
+    List<CrewRoomSchedule> findSchedulesForCurrentMonth(@Param("crewRoomId") Integer crewRoomId, @Param("memberId") String memberId);
 
 }
+
