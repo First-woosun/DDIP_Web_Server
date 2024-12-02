@@ -4,6 +4,7 @@ import com.example.DDIP_web_server.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.DDIP_web_server.repository.MemberRepository;
+import java.util.Map;
 
 @Service
 public class MemberService {
@@ -56,5 +57,9 @@ public class MemberService {
             return true;
         }
         return false;
+    }
+
+    public Member findMemberById (String id){
+            return memberRepository.findById(id).orElse(null);
     }
 }
