@@ -88,4 +88,12 @@ public class MemberController {
         response.put("message", "회원 정보가 존재하지 않습니다.");
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/findMemberById/{id}")
+    public ResponseEntity<Map<String, String>> findMemberByID(@PathVariable String id) {
+        Map<String, String> response = new HashMap<>();
+        Member member = memberService.findById(id);
+        response.put("name", member.getName());
+        return ResponseEntity.ok(response);
+    }
 }
