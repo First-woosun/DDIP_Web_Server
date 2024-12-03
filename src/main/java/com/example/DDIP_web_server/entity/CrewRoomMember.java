@@ -1,5 +1,6 @@
 package com.example.DDIP_web_server.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -12,12 +13,15 @@ public class CrewRoomMember {
     @Column(name = "crew_room_member_id")
     private Integer crewRoomMemberId;
 
+    @JsonProperty("crewRoom")
     @Column(name = "crew_room", nullable = false)
     private Integer crewRoom;
 
+    @JsonProperty("member")
     @Column(name = "member", nullable = false, length = 100)
     private String member;
 
+    @JsonProperty("color")
     @Column(name = "color", length = 20)
     private String color;
 
@@ -25,13 +29,15 @@ public class CrewRoomMember {
     @Column(name = "start_date")
     private Date startDate;
 
+    @JsonProperty("contactNumber")
     @Column(name = "contact_number", length = 20)
     private String contactNumber;
 
+    @JsonProperty("memberType")
     @Column(name = "member_type", length = 100, nullable = false)
     private String memberType;
 
-    // Getter and Setter Methods
+    // Getters and Setters
     public Integer getCrewRoomMemberId() {
         return crewRoomMemberId;
     }
@@ -86,5 +92,18 @@ public class CrewRoomMember {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
+    }
+
+    @Override
+    public String toString() {
+        return "CrewRoomMember{" +
+                "crewRoomMemberId=" + crewRoomMemberId +
+                ", crewRoom=" + crewRoom +
+                ", member='" + member + '\'' +
+                ", color='" + color + '\'' +
+                ", startDate=" + startDate +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", memberType='" + memberType + '\'' +
+                '}';
     }
 }
