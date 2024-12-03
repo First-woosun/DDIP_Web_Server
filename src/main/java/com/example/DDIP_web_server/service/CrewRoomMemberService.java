@@ -16,4 +16,14 @@ public class CrewRoomMemberService {
     public List<CrewRoomMember> getMembersBycrewRoom(Integer crewRoom) {
         return repository.findByCrewRoom(crewRoom);
     }
+
+    public boolean addMember(CrewRoomMember crewRoomMember) {
+        try {
+            this.repository.save(crewRoomMember);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

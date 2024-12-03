@@ -61,4 +61,22 @@ public class CrewRoomController {
         return ResponseEntity.ok(crewRooms);
     }
 
+    // 초대코드 검사
+    @PostMapping("/checkInviteCode")
+    public ResponseEntity<Map<String, Object>> checkInviteCode(@RequestBody Map<String, String> request) {
+        String inviteCode = request.get("inviteCode");
+        CrewRoom crewRoom = crewRoomService.findByInvitationCode(inviteCode);
+
+        Map<String, Object> response = new HashMap<>();
+        if (crewRoom != null) {
+            response.put("isValid", true);
+            response.put("crewRoomId", crewRoom.getCrewRoomId());
+        } else {
+            response.put("isValid", false);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+
 }
