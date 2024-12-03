@@ -17,4 +17,8 @@ public interface CrewRoomRepository extends JpaRepository<CrewRoom, Long> {
     // 특정 크루룸ID의 크루룸명 가져오기
     @Query("SELECT cr.crewRoomName FROM CrewRoom cr WHERE cr.crewRoomId = :crewRoomId")
     String findCrewRoomNameById(@Param("crewRoomId") Integer crewRoomId);
+
+    @Query("SELECT c FROM CrewRoom c WHERE c.crewRoomInvitation = :inviteCode")
+    CrewRoom findByInvitationCode(@Param("inviteCode") String inviteCode);
+
 }

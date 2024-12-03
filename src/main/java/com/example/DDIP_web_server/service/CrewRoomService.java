@@ -49,4 +49,9 @@ public class CrewRoomService {
         }
         return crewRooms;
     }
+
+    public CrewRoom findByInvitationCode(String inviteCode) {
+        return crewRoomRepository.findByInvitationCode(inviteCode);
+    }
+
 }
