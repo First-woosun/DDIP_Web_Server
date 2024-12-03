@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -19,18 +22,38 @@ public class CrewRoomMemberController {
         this.crewRoomMemberService = crewRoomMemberService;
     }
 
+    @GetMapping("/getCrewRoomMembers/{crewRoom}")
+    public ResponseEntity<List<Map<String, String>>> getCrewRoomMembers(@RequestParam("crewRoom") String crewRoom) {
+        Integer path = Integer.parseInt(crewRoom);
+        List<CrewRoomMember> result = crewRoomMemberService.getMembersBycrewRoom(path);
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        for(int i = 0; i < result.size(); i++) {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("crewRoom", String.valueOf(result.get(i).getcrewRoom()));
+            map.put("crewRoomMemberId", String.valueOf(result.get(i).getcrewRoomMemberId()));
+            map.put("member", result.get(i).getMember());
+            map.put("color", result.get(i).getcolor());
+            map.put("startDate", result.get(i).getstartDate().toString());
+            map.put("memberType", result.get(i).getmemberType());
+            map.put("contactNumber", result.get(i).getcontactNumber());
+            data.add(map);
+
+//            result.get(i).getall();
+        }
+        return ResponseEntity.ok(data);
+    }
     @PostMapping("/addMemberToCrew")
     public ResponseEntity<String> addMemberToCrew(@RequestBody CrewRoomMember crewRoomMember) {
         try {
             // 요청 데이터 검증 및 로깅
             System.out.println("Received member data:");
-            System.out.println("Crew Room ID: " + crewRoomMember.getCrewRoom());
+            System.out.println("Crew Room ID: " + crewRoomMember.getcrewRoom());
             System.out.println("Member: " + crewRoomMember.getMember());
-            System.out.println("Member Type: " + crewRoomMember.getMemberType());
-            System.out.println("Color: " + crewRoomMember.getColor());
-            System.out.println("Contact Number: " + crewRoomMember.getContactNumber());
+            System.out.println("Member Type: " + crewRoomMember.getmemberType());
+            System.out.println("Color: " + crewRoomMember.getcolor());
+            System.out.println("Contact Number: " + crewRoomMember.getcontactNumber());
 
-            if (crewRoomMember.getCrewRoom() == null || crewRoomMember.getMember() == null) {
+            if (crewRoomMember.getcrewRoom() == null || crewRoomMember.getMember() == null) {
                 return ResponseEntity.badRequest().body("Crew Room ID or Member is missing.");
             }
 
