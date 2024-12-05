@@ -43,5 +43,6 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
             "AND FUNCTION('YEAR', crs.date) = FUNCTION('YEAR', CURRENT_DATE)")
     List<CrewRoomSchedule> findSchedulesForCurrentMonth(@Param("crewRoomId") Integer crewRoomId, @Param("memberId") String memberId);
 
+    @Query("SELECT crs FROM CrewRoomSchedule crs WHERE crs.member = :member")
+    List<CrewRoomSchedule> getMySchedules(@Param("member") String MemberID);
 }
-

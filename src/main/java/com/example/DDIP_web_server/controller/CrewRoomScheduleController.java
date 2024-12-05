@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +72,25 @@ public class CrewRoomScheduleController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update schedule.");
         }
+    }
+
+    @GetMapping("getMySchedule/{member}")
+    public ResponseEntity<List<Map<String, String>>> getMySchedule(@PathVariable String member) {
+        List<CrewRoomSchedule> result = crewRoomScheduleService.getMySchedules(member);
+        List<Map<String, String>> schedules = new ArrayList<>();
+        for(int i = 0; i < result.size(); i++) {
+            Map<String, String> schedule = new HashMap<>();
+            schedule.put("crewRoom", String.valueOf(result.get(i).getCrewRoom()));
+            schedule.put("member", result.get(i).getMember());
+            schedule.put("date", result.get(i).getDate().toString());
+            schedule.put("startTime", result.get(i).getStartTime().toString());
+            schedule.put("endTime", result.get(i).getEndTime().toString());
+            schedule.put("pay", result.get(i).getPay().toString());
+            schedule.put("totalHours", result.get(i).getTotalHours().toString());
+            schedules.add(schedule);
+        }
+
+        return ResponseEntity.ok(schedules);
     }
 }
 
