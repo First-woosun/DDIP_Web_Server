@@ -1,86 +1,84 @@
 package com.example.DDIP_web_server.service;
 
-import org.springframework.stereotype.Service;
+import com.example.DDIP_web_server.entity.CrewRoomSchedule;
 import com.example.DDIP_web_server.repository.CrewRoomScheduleRepository;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class CrewRoomPayService {
 
-    // CrewRoomScheduleRepository를 주입하여, 데이터베이스와 상호작용하는 역할을 담당
-    private final CrewRoomScheduleRepository scheduleRepository;
-    // 최저 시급을 나타내는 상수, 이 값은 향후 계산에 사용될 수 있음
-    private static final double HOURLY_RATE = 9860.0;
+    private static final double MINIMUM_WAGE = 9860; // 최저시급
 
-    // 생성자 주입을 통해 CrewRoomScheduleRepository의 인스턴스를 받아와 설정
-    public CrewRoomPayService(CrewRoomScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
+    private final CrewRoomScheduleRepository crewRoomScheduleRepository;
+
+    public CrewRoomPayService(CrewRoomScheduleRepository crewRoomScheduleRepository) {
+        this.crewRoomScheduleRepository = crewRoomScheduleRepository;
     }
 
-    // 현재 설정된 시급을 반환하는 메서드
-    public double getHourlyRate() {
-        return HOURLY_RATE;
+    public Map<Integer, Map<String, Object>> calculateMemberMonthlyPay(Integer crewroomid, String member) {
+        List<CrewRoomSchedule> schedules = crewRoomScheduleRepository.findByCrewRoomAndMemberAndStatus(
+                crewroomid, member, "ACTIVE");
+
+        LocalDate now = LocalDate.now();
+        schedules = schedules.stream()
+                .filter(schedule -> isCurrentMonth(schedule.getDate(), now))
+                .collect(Collectors.toList());
+
+        return calculateWeeklyPay(schedules); // 직접 중첩된 Map 반환
     }
 
-    /**
-     * 특정 월에 대한 주차별 근무 시간을 계산하여 반환하는 메서드
-     *
-     * @param month 계산할 대상 월 (1 ~ 12)
-     * @return 주차별 근무 시간의 Map (키: 1~5 주차, 값: 각 주차별 총 근무 시간)
-     */
-    public Map<Integer, Double> getWeeklyHoursByMonth(int month) {
-        // 데이터베이스에서 주어진 월의 주차별 근무 시간을 조회
-        List<Object[]> results = scheduleRepository.findWeeklyHoursAndPayByMonth(month);
-        Map<Integer, Double> weeklyHours = new HashMap<>();
+    public Map<String, Object> calculateAllMembersMonthlyPay(Integer crewroomid) {
+        List<CrewRoomSchedule> schedules = crewRoomScheduleRepository.findByCrewRoomAndStatus(
+                crewroomid, "ACTIVE");
 
-        // 1. 데이터 로드 및 주차별 시간 계산
-        // 데이터베이스에서 받아온 각 결과를 처리하여 주차별 근무 시간을 계산
-        for (Object[] result : results) {
-            // yearWeek는 연도와 주차 정보가 포함된 문자열 ("yyyyWW" 형식)
-            String yearWeek = result[0].toString();
-            // hours는 주차별 근무 시간, BigDecimal 형식이므로 double로 변환
-            Double hours = ((BigDecimal) result[1]).doubleValue();
+        LocalDate now = LocalDate.now();
+        schedules = schedules.stream()
+                .filter(schedule -> isCurrentMonth(schedule.getDate(), now))
+                .collect(Collectors.toList());
 
-            // yearWeek 문자열을 파싱하여 연도(year)와 연도 내 주차(weekOfYear)를 추출
-            int year = Integer.parseInt(yearWeek.substring(0, 4)); // 앞 4자리는 연도
-            int weekOfYear = Integer.parseInt(yearWeek.substring(4)); // 나머지는 주차
+        Map<String, Double> monthlyPay = schedules.stream()
+                .collect(Collectors.groupingBy(CrewRoomSchedule::getMember,
+                        Collectors.summingDouble(schedule -> calculateDailyPay(schedule))));
 
-            // 연도와 주차 정보를 통해 해당 주차의 날짜를 가져옴
-            LocalDate date = LocalDate.ofYearDay(year, 1)
-                    .with(WeekFields.of(Locale.getDefault()).weekOfYear(), weekOfYear);
-            // 그 날짜를 이용해 해당 월의 몇 번째 주인지 계산
-            int weekOfMonth = date.get(WeekFields.of(Locale.getDefault()).weekOfMonth());
+        Map<String, Object> result = new HashMap<>();
+        monthlyPay.forEach(result::put); // Map<String, Double>을 Map<String, Object>로 변환
+        return result;
+    }
 
-            // 주차별 시간 맵에 주차(weekOfMonth)를 키로, 시간을 값으로 저장
-            weeklyHours.put(weekOfMonth, hours);
-        }
+    private boolean isCurrentMonth(Date date, LocalDate now) {
+        LocalDate scheduleDate = LocalDate.of(
+                date.getYear() + 1900, date.getMonth() + 1, date.getDate());
+        return scheduleDate.getMonthValue() == now.getMonthValue() &&
+                scheduleDate.getYear() == now.getYear();
+    }
 
-        // 2. 주차를 1부터 연속되도록 재정렬
-        // weeklyHours에 있는 주차 정보가 순서대로 되어있지 않을 수 있으므로, 1부터 순서대로 정리
-        Map<Integer, Double> adjustedWeeklyHours = new HashMap<>();
-        int adjustedWeek = 1; // 시작 주차를 1로 설정
-        // weeklyHours의 각 주차별 근무 시간을 순서대로 새로운 맵에 추가
-        for (int originalWeek : weeklyHours.keySet()) {
-            adjustedWeeklyHours.put(adjustedWeek, weeklyHours.get(originalWeek));
-            adjustedWeek++;
-        }
+    private Map<Integer, Map<String, Object>> calculateWeeklyPay(List<CrewRoomSchedule> schedules) {
+        Map<Integer, Map<String, Object>> weeklyPay = new HashMap<>();
 
-        // 3. 최대 5주차까지만 반환
-        // 최대 5주차까지만 결과에 포함하도록 필터링, 5주를 초과하는 항목은 포함되지 않음
-        return adjustedWeeklyHours.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey() <= 5) // 5주차 이하의 데이터만 필터링
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey, // 키는 주차
-                        Map.Entry::getValue // 값은 근무 시간
-                ));
+        schedules.stream().collect(Collectors.groupingBy(schedule ->
+                        LocalDate.of(schedule.getDate().getYear() + 1900, schedule.getDate().getMonth() + 1, schedule.getDate().getDate())
+                                .get(WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear())))
+                .forEach((week, weekSchedules) -> {
+                    double totalHours = weekSchedules.stream().mapToDouble(CrewRoomSchedule::getTotalHours).sum();
+                    double totalPay = weekSchedules.stream().mapToDouble(this::calculateDailyPay).sum();
+
+                    if (totalHours > 40) {
+                        totalPay += ((totalHours - 40) * 8 * MINIMUM_WAGE / 40);
+                    }
+
+                    weeklyPay.put(week, Map.of("pay", totalPay, "hours", totalHours));
+                });
+
+        return weeklyPay;
+    }
+
+    private double calculateDailyPay(CrewRoomSchedule schedule) {
+        return schedule.getTotalHours() * schedule.getPay();
     }
 }
