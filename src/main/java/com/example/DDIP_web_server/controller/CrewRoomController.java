@@ -81,5 +81,11 @@ public class CrewRoomController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/listWithInvitation/{memberId}")
+    public ResponseEntity<List<Map<String, String>>> getCrewRoomsWithInvitation(@PathVariable String memberId) {
+        List<Map<String, String>> crewRooms = crewRoomService.getCrewRoomsWithInvitationByMemberId(memberId);
+        return ResponseEntity.ok(crewRooms);
+    }
+
 
 }

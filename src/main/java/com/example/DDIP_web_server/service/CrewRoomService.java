@@ -60,4 +60,20 @@ public class CrewRoomService {
         return crewRoomRepository.findByInvitationCode(inviteCode);
     }
 
+    public List<Map<String, String>> getCrewRoomsWithInvitationByMemberId(String memberId) {
+        List<Integer> crewRoomIds = crewRoomRepository.findDistinctCrewRoomIdsByMemberId(memberId);
+
+        List<Map<String, String>> crewRooms = new ArrayList<>();
+        for (Integer crewRoomId : crewRoomIds) {
+            CrewRoom crewRoom = crewRoomRepository.findById(Long.valueOf(crewRoomId)).orElse(null);
+            if (crewRoom != null) {
+                Map<String, String> crewRoomInfo = new HashMap<>();
+                crewRoomInfo.put("crewRoomId", String.valueOf(crewRoom.getCrewRoomId()));
+                crewRoomInfo.put("crewRoomName", crewRoom.getCrewRoomName());
+                crewRoomInfo.put("crewRoomInvitation", crewRoom.getCrewRoomInvitation()); // 초대코드 포함
+                crewRooms.add(crewRoomInfo);
+            }
+        }
+        return crewRooms;
+    }
 }
