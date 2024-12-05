@@ -33,7 +33,6 @@ public class CrewRoomMemberController {
             map.put("crewRoomMemberId", String.valueOf(result.get(i).getcrewRoomMemberId()));
             map.put("member", result.get(i).getMember());
             map.put("color", result.get(i).getcolor());
-            map.put("startDate", result.get(i).getstartDate().toString());
             map.put("memberType", result.get(i).getmemberType());
             map.put("contactNumber", result.get(i).getcontactNumber());
             data.add(map);

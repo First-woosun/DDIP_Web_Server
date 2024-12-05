@@ -13,6 +13,9 @@ import java.util.Map;
 @Repository
 public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedule, Integer> {
 
+    List<CrewRoomSchedule> findByCrewRoomAndMemberAndStatus(Integer crewRoom, String member, String status);
+    List<CrewRoomSchedule> findByCrewRoomAndStatus(Integer crewRoom, String status);
+
     // 현재 주 스케줄 검색
     @Query(value = "SELECT * FROM CrewRoomSchedule c " +
             "WHERE c.member = :memberId " +
@@ -42,6 +45,20 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
             "AND FUNCTION('MONTH', crs.date) = FUNCTION('MONTH', CURRENT_DATE) " +
             "AND FUNCTION('YEAR', crs.date) = FUNCTION('YEAR', CURRENT_DATE)")
     List<CrewRoomSchedule> findSchedulesForCurrentMonth(@Param("crewRoomId") Integer crewRoomId, @Param("memberId") String memberId);
+
+    // 특정 월, 멤버, 크루룸에 해당하는 스케줄 데이터를 조회하는 메서드
+    @Query("SELECT s FROM CrewRoomSchedule s WHERE MONTH(s.date) = :month AND s.member = :member AND s.crewRoom = :crewRoom")
+    List<CrewRoomSchedule> findSchedulesByMonthAndMemberAndCrewRoom(@Param("month") int month, @Param("member") String member, @Param("crewRoom") Integer crewRoom);
+
+    @Query("SELECT s FROM CrewRoomSchedule s WHERE s.crewRoom = :crewroom AND s.member = :member AND s.status = 'ACTIVE' AND s.date BETWEEN :startDate AND :endDate")
+    List<CrewRoomSchedule> findActiveSchedulesByCrewRoomAndMember(
+            @Param("crewroom") int crewRoom,
+            @Param("member") int member,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT DISTINCT s.member FROM CrewRoomSchedule s WHERE s.crewRoom = :crewroom AND s.status = 'ACTIVE'")
+    List<Integer> findDistinctMembersByCrewRoom(@Param("crewroom") int crewRoom);
 
 }
 
