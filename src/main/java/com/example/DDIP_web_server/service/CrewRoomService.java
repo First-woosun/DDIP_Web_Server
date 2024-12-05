@@ -20,7 +20,13 @@ public class CrewRoomService {
 
     // 새로운 크루룸을 생성하여 저장
     public CrewRoom createCrewRoom(CrewRoom crewRoom) {
-        return crewRoomRepository.save(crewRoom);
+        // 저장된 CrewRoom 반환
+        CrewRoom savedCrewRoom = crewRoomRepository.save(crewRoom);
+
+        // 로그로 확인
+        System.out.println("Saved CrewRoom(크루룸서비스): " + savedCrewRoom);
+
+        return savedCrewRoom;
     }
 
     // 모든 크루룸을 조회

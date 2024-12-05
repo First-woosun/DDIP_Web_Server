@@ -26,6 +26,9 @@ public class CrewRoomController {
         // 서비스 클래스를 통해 크루룸 생성
         CrewRoom newCrewRoom = crewRoomService.createCrewRoom(crewRoom);
 
+        // 디버깅 로그 추가
+        System.out.println("Returning CrewRoom(크루룸컨트롤러): " + newCrewRoom);
+
         // 응답을 위한 Map 객체 생성
         Map<String, String> response = new HashMap<>();
         //response.put("id", String.valueOf(newCrewRoom.getId()));  // 생성된 크루룸의 ID 추가

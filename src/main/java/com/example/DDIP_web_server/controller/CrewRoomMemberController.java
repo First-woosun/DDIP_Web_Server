@@ -45,7 +45,7 @@ public class CrewRoomMemberController {
     public ResponseEntity<String> addMemberToCrew(@RequestBody CrewRoomMember crewRoomMember) {
         try {
             // 요청 데이터 검증 및 로깅
-            System.out.println("Received member data:");
+            System.out.println("Received member data:" + crewRoomMember);
             System.out.println("Crew Room ID: " + crewRoomMember.getcrewRoom());
             System.out.println("Member: " + crewRoomMember.getMember());
             System.out.println("Member Type: " + crewRoomMember.getmemberType());
@@ -68,4 +68,31 @@ public class CrewRoomMemberController {
             return ResponseEntity.status(500).body("Failed to add member: " + e.getMessage());
         }
     }
+    @PostMapping("/addOwnerToCrewRoom")
+    public ResponseEntity<String> addOwnerToCrewRoom(@RequestParam Integer crewRoomId, @RequestParam String ownerId) {
+        try {
+            System.out.println("Received Request - CrewRoomId: " + crewRoomId + ", OwnerId: " + ownerId);
+
+            CrewRoomMember crewRoomMember = new CrewRoomMember();
+            crewRoomMember.setcrewRoom(crewRoomId);
+            crewRoomMember.setMember(ownerId);
+            crewRoomMember.setcolor("Owner");
+            crewRoomMember.setContactNumber("010-0000-0000");
+            crewRoomMember.setMemberType("owner");
+
+            boolean success = crewRoomMemberService.addMember(crewRoomMember);
+
+            if (success) {
+                System.out.println("Owner added to crew_room_member.");
+                return ResponseEntity.ok("Owner added successfully to crew room.");
+            } else {
+                System.out.println("Failed to add owner to crew_room_member.");
+                return ResponseEntity.status(500).body("Failed to add owner to crew room.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error adding owner to crew room: " + e.getMessage());
+        }
+    }
+
 }
