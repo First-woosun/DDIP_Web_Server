@@ -96,4 +96,7 @@ public class CrewRoomScheduleService {
         return false;
     }
 
+    public List<CrewRoomSchedule> getMySchedules(String memberId) {
+        return crewRoomScheduleRepository.getMySchedules(memberId);
+    }
 }

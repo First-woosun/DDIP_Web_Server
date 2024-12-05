@@ -60,5 +60,7 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
     @Query("SELECT DISTINCT s.member FROM CrewRoomSchedule s WHERE s.crewRoom = :crewroom AND s.status = 'ACTIVE'")
     List<Integer> findDistinctMembersByCrewRoom(@Param("crewroom") int crewRoom);
 
+    @Query("SELECT crs FROM CrewRoomSchedule crs WHERE crs.member = :member")
+    List<CrewRoomSchedule> getMySchedules(@Param("member") String MemberID);
 }
 
