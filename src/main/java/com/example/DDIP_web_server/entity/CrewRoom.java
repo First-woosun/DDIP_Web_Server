@@ -89,4 +89,15 @@ public class CrewRoom {
             this.crewRoomInvitation = inviteCode.toString();
         }
     }
+    // toString() 메서드 추가
+    @Override
+    public String toString() {
+        return "CrewRoom{" +
+                "crewRoomId=" + crewRoomId +
+                ", crewRoomName='" + crewRoomName + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", owner='" + owner + '\'' +
+                ", crewRoomInvitation='" + crewRoomInvitation + '\'' +
+                '}';
+    }
 }
