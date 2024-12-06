@@ -96,8 +96,8 @@ public class CrewRoomScheduleService {
         return false;
     }
 
-    public List<CrewRoomSchedule> getMySchedules(String memberId) {
-        return crewRoomScheduleRepository.getMySchedules(memberId);
+    public List<CrewRoomSchedule> getMySchedules(String memberId, Integer crewRoom) {
+        return crewRoomScheduleRepository.getMySchedules(memberId, crewRoom);
     }
 
     public List<CrewRoomSchedule> getAllSchedules(Integer crewRoom) {

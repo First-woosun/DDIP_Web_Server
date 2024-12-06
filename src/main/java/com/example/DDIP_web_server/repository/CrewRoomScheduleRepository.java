@@ -61,8 +61,8 @@ public interface CrewRoomScheduleRepository extends JpaRepository<CrewRoomSchedu
     List<Integer> findDistinctMembersByCrewRoom(@Param("crewroom") int crewRoom);
 
     // 사용자 ID와 일치하는 스케줄 모두 불러오기
-    @Query("SELECT crs FROM CrewRoomSchedule crs WHERE crs.member = :member")
-    List<CrewRoomSchedule> getMySchedules(@Param("member") String MemberID);
+    @Query("SELECT crs FROM CrewRoomSchedule crs WHERE crs.member = :member AND crs.crewRoom = :crewRoom")
+    List<CrewRoomSchedule> getMySchedules(@Param("member") String MemberID, @Param("crewRoom") Integer crewRoom);
 
     //crewroom 번호와 일치하는 모든 스케줄 불러오기
     @Query("SELECT crs FROM CrewRoomSchedule crs WHERE crs.crewRoom = :crewRoom")
