@@ -96,4 +96,18 @@ public class MemberController {
         response.put("name", member.getName());
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/findMemberDetails/{id}")
+    public ResponseEntity<Map<String, String>> findMemberDetails(@PathVariable String id) {
+        Map<String, String> response = new HashMap<>();
+        Member member = memberService.findById(id);
+        if (member != null) {
+            response.put("name", member.getName());
+            response.put("contactNumber", member.getContact_number());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", "Member not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
