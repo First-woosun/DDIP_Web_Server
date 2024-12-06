@@ -92,5 +92,25 @@ public class CrewRoomScheduleController {
 
         return ResponseEntity.ok(schedules);
     }
+
+    @GetMapping("getAllSchedules/{crewRoom}")
+    public ResponseEntity<List<Map<String, String>>> getAllSchedules(@PathVariable String crewRoom) {
+        Integer path = Integer.parseInt(crewRoom);
+        List<CrewRoomSchedule> result = crewRoomScheduleService.getAllSchedules(path);
+        List<Map<String, String>> schedules = new ArrayList<>();
+        for(int i = 0; i < result.size(); i++) {
+            Map<String, String> schedule = new HashMap<>();
+            schedule.put("crewRoom", String.valueOf(result.get(i).getCrewRoom()));
+            schedule.put("member", result.get(i).getMember());
+            schedule.put("date", result.get(i).getDate().toString());
+            schedule.put("startTime", result.get(i).getStartTime().toString());
+            schedule.put("endTime", result.get(i).getEndTime().toString());
+            schedule.put("pay", result.get(i).getPay().toString());
+            schedule.put("totalHours", result.get(i).getTotalHours().toString());
+            schedules.add(schedule);
+        }
+
+        return ResponseEntity.ok(schedules);
+    }
 }
 
