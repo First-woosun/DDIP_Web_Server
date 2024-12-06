@@ -5,6 +5,7 @@ package com.example.DDIP_web_server.controller;
 import com.example.DDIP_web_server.entity.CrewRoom;
 import com.example.DDIP_web_server.service.CrewRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,6 +86,17 @@ public class CrewRoomController {
     public ResponseEntity<List<Map<String, String>>> getCrewRoomsWithInvitation(@PathVariable String memberId) {
         List<Map<String, String>> crewRooms = crewRoomService.getCrewRoomsWithInvitationByMemberId(memberId);
         return ResponseEntity.ok(crewRooms);
+    }
+
+    @GetMapping("/getInviteCode/{crewRoomId}")
+    public ResponseEntity<Map<String, String>> getInviteCode(@PathVariable String crewRoomId) {
+        String inviteCode = crewRoomService.getInviteCodeByCrewRoomId(crewRoomId);
+        if (inviteCode != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("inviteCode", inviteCode);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 

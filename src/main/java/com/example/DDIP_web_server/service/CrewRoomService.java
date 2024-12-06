@@ -76,4 +76,13 @@ public class CrewRoomService {
         }
         return crewRooms;
     }
+    public String getInviteCodeByCrewRoomId(String crewRoomId) {
+        // 크루룸 조회
+        CrewRoom crewRoom = crewRoomRepository.findById(Long.valueOf(crewRoomId)).orElse(null);
+        if (crewRoom != null) {
+            // 초대 코드 반환
+            return crewRoom.getCrewRoomInvitation();
+        }
+        return null; // 크루룸이 없는 경우
+    }
 }
