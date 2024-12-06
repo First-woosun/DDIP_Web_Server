@@ -80,8 +80,6 @@ public class CrewRoomScheduleController {
         List<Map<String, String>> schedules = new ArrayList<>();
         for(int i = 0; i < result.size(); i++) {
             Map<String, String> schedule = new HashMap<>();
-            schedule.put("crewRoom", String.valueOf(result.get(i).getCrewRoom()));
-            schedule.put("member", result.get(i).getMember());
             schedule.put("date", result.get(i).getDate().toString());
             schedule.put("startTime", result.get(i).getStartTime().toString());
             schedule.put("endTime", result.get(i).getEndTime().toString());
