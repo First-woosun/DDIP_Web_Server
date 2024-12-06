@@ -74,9 +74,9 @@ public class CrewRoomScheduleController {
         }
     }
 
-    @GetMapping("getMySchedule/{member}")
-    public ResponseEntity<List<Map<String, String>>> getMySchedule(@PathVariable String member) {
-        List<CrewRoomSchedule> result = crewRoomScheduleService.getMySchedules(member);
+    @GetMapping("getMySchedule/{member}/{crewRoom}")
+    public ResponseEntity<List<Map<String, String>>> getMySchedule(@PathVariable String member, @PathVariable Integer crewRoom) {
+        List<CrewRoomSchedule> result = crewRoomScheduleService.getMySchedules(member, crewRoom);
         List<Map<String, String>> schedules = new ArrayList<>();
         for(int i = 0; i < result.size(); i++) {
             Map<String, String> schedule = new HashMap<>();
